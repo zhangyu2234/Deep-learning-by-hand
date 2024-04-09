@@ -20,7 +20,7 @@ class DataLoader:
     def __iter__(self):
         self.start = 0
         if self.shuffle is True:
-            self.shuffle(self.indexes)
+            shuffle(self.indexes)
         return self
     def __next__(self):
         start = self.start
