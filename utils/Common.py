@@ -47,4 +47,13 @@ def relu(x):
     a = torch.zeros(x.shape)
     return torch.max(a, x)
 
+def softmax(x):
+    a = torch.exp(x)
+    return a / torch.sum(a, dim=-1, keepdim=True)
+
+def cross_entropy(y_hat, y):
+    return -torch.sum((y*torch.log(y_hat)))
+
+def sigmoid(x):
+    return 1 / (1 + torch.exp(-x))
 
