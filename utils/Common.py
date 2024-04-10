@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
-
 from random import shuffle
 import torch
+import torchvision
+import torchvision.transforms as transforms
+import matplotlib.pyplot as plt
 
 
 class DataLoader:
@@ -52,8 +53,19 @@ def softmax(x):
     return a / torch.sum(a, dim=-1, keepdim=True)
 
 def cross_entropy(y_hat, y):
-    return -torch.sum((y*torch.log(y_hat)))
+    
+    
 
 def sigmoid(x):
     return 1 / (1 + torch.exp(-x))
+
+def show_img(data, figsizes, num_imgs=6):
+    _, axes = plt.subplots(2, 3, figsize=figsizes)
+    for i in range(num_imgs):
+      ax = axes[i//3, i%3]
+      img, label = data[i]
+      ax.imshow(img.squeeze(), cmap='gray')
+      ax.set_title(f'Label:{label}')
+      ax.axis('off')
+
 
