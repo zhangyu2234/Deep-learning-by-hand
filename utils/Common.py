@@ -69,3 +69,28 @@ def show_img(data, figsizes, num_imgs=6):
       ax.axis('off')
 
 
+class ImageDataLoader:
+    def __init__(self, datasets, batch_size, shuffle=False):
+        self.datasets = datasets
+        self.batch_size = batch_size
+        self.indexes = list(range(len(self.datasets)))
+        self.shuffle = shuffle
+        self.num_imgs = len(datasets)
+
+    def __iter__(self):
+        self.start = 0
+        if self.shuffle is True:
+            shuffle(self.indexes)
+        return self
+
+    def __next__(self):
+        start = self.start
+        self.end = min(start+self.batch_size, len(self.datasets))
+        if start >= self.end:
+            raise StopIteration
+        self.start += self.batch_size
+        index = self.indexes[start:self.end]
+        batch = [self.datasets[i] for i in index]
+        data = torch.stack([img[0] for img in batch])
+        label = torch.tensor([labels[1] for labels in batch])
+        return data, label
