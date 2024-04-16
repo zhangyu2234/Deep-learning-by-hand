@@ -121,7 +121,7 @@ def validation(model, data_loader):
     return correct / total
             
     
-def train_and_test(num_epochs, model, loss_function, optim, valid, train, test):
+def train_and_test(num_epochs, model, loss_function, optim, valid, train, test, figsize):
   loss_value = []
   acc_value = []
   for epoch in range(num_epochs):
@@ -140,7 +140,7 @@ def train_and_test(num_epochs, model, loss_function, optim, valid, train, test):
   accuracy = valid(model, test)
   acc_value.append(accuracy)
   print(f'Step:{i+1}/{len(train)}, Epoch:{epoch+1}/{num_epochs}, Accuracy:{accuracy:.2f}')
-  return loss_value, acc_value
+  plot_loss_acc(loss_value, acc_value, figsize, num_epochs)
 
 
 
