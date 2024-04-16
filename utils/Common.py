@@ -53,6 +53,7 @@ def softmax(x):
     return a / torch.sum(a, dim=-1, keepdim=True)
 
 def cross_entropy(y_hat, y):
+    y_hat = 
     
     
 
@@ -95,17 +96,32 @@ class ImageDataLoader:
         label = torch.tensor([labels[1] for labels in batch])
         return data, label
 
-    def plot_loss_acc(loss, acc, figsize, num_epochs, xlabel1='Epoch', ylabel1='Loss', ylabel2='Accuracy', color1='red', color2='blue'):
-        fig, ax1 = plt.subplots(figsize=figsize)
-        ax1.set_xlabel(xlabel1)
-        ax1.set_ylabel(ylabel1, color=color1)
-        ax1.plot(range(1, num_epochs+1, 1), loss, color=color1)
-        # Configure the style of tick marks on the axis
-        ax1.tick_params(axis='y', labelcolor=color1)
-        ax2 = ax1.twinx()
-        ax2.set_ylabel(ylabel2, color=color2)
-        ax2.plot(acc, color=color2)
-        ax2.tick_params(axis='y', labelcolor=color2)
+
+def plot_loss_acc(loss, acc, figsize, num_epochs, xlabel1='Epoch', ylabel1='Loss', ylabel2='Accuracy', color1='red', color2='blue'):
+  fig, ax1 = plt.subplots(figsize=figsize)
+  ax1.set_xlabel(xlabel1)
+  ax1.set_ylabel(ylabel1, color=color1)
+  ax1.plot(range(1, num_epochs+1, 1), loss, color=color1)
+  # Configure the style of tick marks on the axis
+  ax1.tick_params(axis='y', labelcolor=color1)
+  ax2 = ax1.twinx()
+  ax2.set_ylabel(ylabel2, color=color2)
+  ax2.plot(acc, color=color2)
+  ax2.tick_params(axis='y', labelcolor=color2)
+
+def validation(model, data_loader):
+    correct = 0
+    total = 0
+    model.eval()
+    with torch.no_grad():
+        for imgs, label in data_loader:
+            y = model(imgs)
+            _, predicted = torch.max(y, dim=1)
+            correct += (predicted == label).sum()
+            total += label.size(0)
+    return correct / total
+            
+    
 
 
 
