@@ -121,7 +121,26 @@ def validation(model, data_loader):
     return correct / total
             
     
-
+def train_and_test(num_epochs, model):
+  loss_value = []
+  acc_value = []
+  for epoch in range(num_epochs):
+    batch_loss = []
+  for i, (img, label) in enumerate(train_loader):
+    l = loss(net(img), label)
+    batch_loss.append(l.item())
+    optimizer.zero_grad()
+    l.backward()
+    optimizer.step()
+    batch_loss.append(l.item())
+    if (i+1) % 100 == 0:
+      print(f'Step:{i+1}/{len(train_loader)}, Epoch:{epoch+1}/{num_epochs}, Loss:{l.item():.4f}')
+  avg_loss = sum(batch_loss) / len(batch_loss)
+  loss_value.append(avg_loss)
+  accuracy = validation(net, test_loader)
+  acc_value.append(accuracy)
+  print(f'Step:{i+1}/{len(train_loader)}, Epoch:{epoch+1}/{num_epochs}, Accuracy:{accuracy:.2f}')
+  return loss_value, acc_value
 
 
 
