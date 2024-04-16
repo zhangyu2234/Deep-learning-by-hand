@@ -53,9 +53,8 @@ def softmax(x):
     return a / torch.sum(a, dim=-1, keepdim=True)
 
 def cross_entropy(y_hat, y):
-    y_hat = 
-    
-    
+    return -torch.log(y_hat[range(len(y_hat)), y])
+
 
 def sigmoid(x):
     return 1 / (1 + torch.exp(-x))
