@@ -126,22 +126,21 @@ def train_and_test(num_epochs, model, loss_function, optim, valid, train, test, 
   acc_value = []
   for epoch in range(num_epochs):
     batch_loss = []
-  for i, (img, label) in enumerate(train):
-    l = loss_function(model(img), label)
-    batch_loss.append(l.item())
-    optim.zero_grad()
-    l.backward()
-    optim.step()
-    batch_loss.append(l.item())
-    if (i+1) % 100 == 0:
-      print(f'Step:{i+1}/{len(train)}, Epoch:{epoch+1}/{num_epochs}, Loss:{l.item():.4f}')
-  avg_loss = sum(batch_loss) / len(batch_loss)
-  loss_value.append(avg_loss)
-  accuracy = valid(model, test)
-  acc_value.append(accuracy)
-  print(f'Step:{i+1}/{len(train)}, Epoch:{epoch+1}/{num_epochs}, Accuracy:{accuracy:.2f}')
+    for i, (img, label) in enumerate(train):
+      l = loss_function(model(img), label)
+      batch_loss.append(l.item())
+      optim.zero_grad()
+      l.backward()
+      optim.step()
+      batch_loss.append(l.item())
+      if (i+1) % 100 == 0:
+        print(f'Step:{i+1}/{len(train)}, Epoch:{epoch+1}/{num_epochs}, Loss:{l.item():.4f}')
+    avg_loss = sum(batch_loss) / len(batch_loss)
+    loss_value.append(avg_loss)
+    accuracy = valid(model, test)
+    acc_value.append(accuracy)
+    print(f'Step:{i+1}/{len(train)}, Epoch:{epoch+1}/{num_epochs}, Accuracy:{accuracy:.2f}')
   plot_loss_acc(loss_value, acc_value, figsize, num_epochs)
-
 
 
 
