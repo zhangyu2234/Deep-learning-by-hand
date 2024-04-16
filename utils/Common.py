@@ -137,7 +137,7 @@ def train_and_test(num_epochs, model, loss_function, optim, valid, train, test):
       print(f'Step:{i+1}/{len(train)}, Epoch:{epoch+1}/{num_epochs}, Loss:{l.item():.4f}')
   avg_loss = sum(batch_loss) / len(batch_loss)
   loss_value.append(avg_loss)
-  accuracy = valid(net, test)
+  accuracy = valid(model, test)
   acc_value.append(accuracy)
   print(f'Step:{i+1}/{len(train)}, Epoch:{epoch+1}/{num_epochs}, Accuracy:{accuracy:.2f}')
   return loss_value, acc_value
