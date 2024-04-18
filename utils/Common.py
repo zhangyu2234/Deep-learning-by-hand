@@ -150,7 +150,7 @@ def validation_gpu(model, data_loader, device):
         for imgs, label in data_loader:
           imgs = imgs.to(device=device)
           label = label.to(device=device)
-          y = model(imgs)
+          y, _ = model(imgs)
           _, predicted = torch.max(y, dim=1)
           correct += (predicted == label).sum()
           total += label.size(0)
