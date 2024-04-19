@@ -181,7 +181,7 @@ def train_and_test_gpu(num_epochs, model, loss_function, optim, valid, train, te
     print(f'Step:{i+1}/{len(train)}, Epoch:{epoch+1}/{num_epochs}, Accuracy:{accuracy:.2f}')
   plot_loss_acc(loss_value, acc_value, figsize, num_epochs)
     
-def validation_rnn_gpu(model, data_loader, device):
+def validation_rnn(model, data_loader, device):
     correct = 0
     total = 0
     model.eval()
@@ -195,7 +195,7 @@ def validation_rnn_gpu(model, data_loader, device):
           total += label.size(0)
     return correct / total
     
-def train_and_test_rnn_gpu(num_epochs, model, loss_function, optim, valid, train, test, device, figsize):
+def train_and_test_rnn(num_epochs, model, loss_function, optim, valid, train, test, device, figsize):
   loss_value = []
   acc_value = []
   for epoch in range(num_epochs):
