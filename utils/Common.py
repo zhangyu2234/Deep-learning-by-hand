@@ -189,7 +189,8 @@ def validation_rnn(model, data_loader, device):
         for imgs, label in data_loader:
           imgs = imgs.to(device=device)
           label = label.to(device=device)
-          y, _ = model(imgs)
+          state= model.init_state_(imgs.shape[0], device)
+          y, _ = model(imgs, state)
           _, predicted = torch.max(y, dim=1)
           correct += (predicted == label).sum()
           total += label.size(0)
@@ -203,7 +204,8 @@ def train_and_test_rnn(num_epochs, model, loss_function, optim, valid, train, te
     for i, (img, label) in enumerate(train):
       img = img.to(device=device)
       label = label.to(device=device)
-      y_hat, _ = model(img)
+      state = model.init_state_(img.shape[0], device)
+      y_hat, _ = model(img, state)
       l = loss_function(y_hat, label)
       batch_loss.append(l.item())
       optim.zero_grad()
